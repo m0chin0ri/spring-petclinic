@@ -16,8 +16,6 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalInt;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -37,7 +35,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author Arjen Poutsma
  * @author Michael Isvy
  * @author Dave Syer
- * @author Wick Dynex
  */
 @Controller
 class VisitController {
@@ -63,9 +60,7 @@ class VisitController {
 	@ModelAttribute("visit")
 	public Visit loadPetWithVisit(@PathVariable("ownerId") int ownerId, @PathVariable("petId") int petId,
 			Map<String, Object> model) {
-		Optional<Owner> optionalOwner = owners.findById(ownerId);
-		Owner owner = optionalOwner.orElseThrow(() -> new IllegalArgumentException(
-				"Owner not found with id: " + ownerId + ". Please ensure the ID is correct "));
+		Owner owner = this.owners.findById(ownerId);
 
 		Pet pet = owner.getPet(petId);
 		model.put("pet", pet);
